@@ -1,9 +1,8 @@
 const express = require('express');
+const FeatureController = require('./controllers/FeatureController');
 
 const routes = express.Router();
 
-routes.get('/', (req, res) => {
-    return res.json({hello: "sup"})
-})
+routes.post('/features', FeatureController.store);
 
 module.exports = routes;
