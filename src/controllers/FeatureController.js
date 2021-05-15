@@ -14,5 +14,22 @@ module.exports = {
             const feature = await Feature.create({ collection_id, color, geometry });
             return res.json(feature);
         }
+    },
+
+    async index(req, res) {
+        const { collection_id } = req.params;
+
+        const collection = await Collection.findByPk(collection_id, {
+            include: {
+                association: 'features'
+            }
+        });
+
+        if (!collection) {
+            return res.status(400).json({ error: 'Collection not found' });
+        } else {
+            return res.json(collection.features);
+        }
+        
     }
 }

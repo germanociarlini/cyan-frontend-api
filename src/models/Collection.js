@@ -8,6 +8,10 @@ class Collection extends Model {
             sequelize: connection
         })
     }
+
+    static associate(models) {
+        this.hasMany(models.Feature, { foreignKey: 'collection_id', as: 'features' });
+    }
 }
 
 module.exports = Collection;
