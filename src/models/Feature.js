@@ -9,6 +9,13 @@ class Feature extends Model {
             sequelize: connection
         })
     }
+
+    static associate(models) {
+        this.belongsTo(models.Collection, {
+            foreignKey: 'collection_id',
+            as: 'owner'
+        })
+    }
 }
 
 module.exports = Feature;
