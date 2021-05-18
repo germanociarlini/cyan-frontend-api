@@ -6,25 +6,28 @@ module.exports = {
     return res.json(features);
   },
 
-  async store(req, res) {
+  async upsert(req, res) {
+    const { collection_id } = req.params;
     const { name } = req.body;
-    const collection = await Collection.create({ name });
-    return res.json(collection);
-  },
 
-  async update(req, res) {
-      const { collection_id } = req.params;
-      const { name } = req.body;
-      const collection = await Collection.findOne({where: {
-        id: collection_id
-      }});
-
-      if (!collection) {
+    if (!collection_id) {
+      // Create
+      const collection = await Collection.create({ name });
+      return res.json(collection);
+    } else {
+      const existingCollection = await Collection.findOne({
+        where: {
+          id: collection_id,
+        },
+      });
+      if (!existingCollection) {
         return res.status(400).json({ error: "Collection not found" });
       } else {
-        collection.name = name;
-        await collection.save();
-        return res.json(collection);
+        // Update
+        existingCollection.name = name;
+        await existingCollection.save();
+        return res.json(existingCollection);
       }
+    }
   }
 };
