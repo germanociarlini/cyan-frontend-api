@@ -19,8 +19,8 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelte: 'CASCADE'
       },
-      color: {
-        type: Sequelize.STRING,
+      properties: {
+        type: Sequelize.JSON,
         allowNull: false
       },
       geometry: {

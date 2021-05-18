@@ -3,7 +3,7 @@ const { Model, DataTypes } = require('sequelize');
 class Feature extends Model {
     static init(connection) {
         super.init({
-            color: DataTypes.STRING,
+            properties: DataTypes.JSON,
             geometry: DataTypes.GEOMETRY
         }, {
             sequelize: connection
